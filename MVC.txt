@@ -1,0 +1,88 @@
+RUN TIME COMPILATION HADANNA 
+	* nuget package eka ganne meken
+
+	Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation
+
+	*meka hadanna one naththam wada karanne naha
+
+	 public void ConfigureServices(IServiceCollection services)
+        {
+            //services.AddControllersWithViews();
+            // .AddRazorRuntimeCompilation();
+            var mvcviews = services.AddControllersWithViews();
+
+            #if (DEBUG)
+            mvcviews.AddRazorRuntimeCompilation();
+            #endif
+        }
+------------------------------------------------------------------------
+CONTROLLERS
+	*meke thama end point eka meken thamai api request yawanne eken handle karanawa route data 
+	 and query-string value ita passe eka model ekata pass karanawa 
+	
+	 public class HellowWorldController : Controller
+    {
+        //public IActionResult Index()
+        //{
+        //    return View();
+        //}
+        // 
+        // GET: /HelloWorld/
+
+        public string pamal()
+        {
+            return "My name is pamal";
+        }
+
+        public string sahan()
+        {
+            return "My name is sahan";
+        }
+
+	 public string chamath(string id)
+        {
+            return "My age is "+id;
+        }
+
+	 public string chamath(string id ,string name)
+        {
+            return "My age is "+id +"and my name is "+name;
+        }
+
+    }
+
+	*meke url enne me widihata
+		https://localhost:44317/HellowWorld/pamal
+		https://localhost:44317/HellowWorld/sahan
+		https://localhost:44317/HellowWorld/chamath/23
+		https://localhost:44317/HellowWorld/chamath?id=23&name=pamal
+
+	*/[Controller]/[ActionName]/[Parameters]
+
+------------------------------------------------------------------------------------
+CONNECT CONTROLLERS WITH VIEW
+	*controller eka namin folder ekak hadaganna eke athule danna function eka namin 
+	 view hadala.
+	
+	  public class HellowWorldController : Controller
+    	{
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult pamal()
+        {
+            return View();
+        }
+
+	https://localhost:44317/HellowWorld/pamal
+-------------------------------------------------------------------------------------------
+CONNECT WITH VIEW AND CONTROLLER 
+	
+	* asp-controller ekai asp-action ekai thamai one wenne
+
+	<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+        	<li role="presentation"><a role="menuitem" tabindex="-1" asp-controller="HellowWorld" asp-action="Index">Index</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" asp-controller="HellowWorld" asp-action="Pamal">Pamal</a></li>
+        </ul>
