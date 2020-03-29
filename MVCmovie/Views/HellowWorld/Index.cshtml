@@ -1,7 +1,9 @@
 ﻿@page
 @model MVCmovie.Views.HellowWorld.IndexModel
 @{
-   // ViewData["Title"] = "HellowWorld";
+    // ViewData["Title"] = "HellowWorld";
 }
 
 <h1 class="form-text">This is Hellow and Index Page run time compilation</h1>
+<h3 class="form-text">@TempData["message"]</h3>
+<h3 class="form-text">  @ViewBag.k  </h3>

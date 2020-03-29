@@ -20,6 +20,7 @@ namespace MVCmovie.Controllers
 
         public IActionResult Index()
         {
+            ViewData["message"] = "hellow my name is pamal";
             return View();
         }
 

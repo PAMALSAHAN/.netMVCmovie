@@ -8,28 +8,34 @@ namespace MVCmovie.Controllers
 {
     public class HellowWorldController : Controller
     {
+      
+
         public IActionResult Index()
         {
+            TempData["message"] = "this is temp data";
+            string k = "this is view bag data";
+            ViewBag.product = k;
             return View();
         }
 
-        public IActionResult pamal()
+        public IActionResult pamal(int num)
         {
+            ViewData["age"] = "My age is " + num;
+            return View();
+        } public IActionResult Welcome(string name, int numTimes = 1)
+        {
+            ViewData["Message"] = "Hello " + name;
+            ViewData["NumTimes"] = numTimes;
+
             return View();
         }
+
         public IActionResult chamath()
         {
             return View();
         }
 
-        public IActionResult welcome(string name,int num)
-        {
-            ViewData["message"] = "Hellow" + name;
-            ViewData["age"] = "My age is " + num;
-
-            return View();
-        }
-
+       
 
 
         //public string pamal()

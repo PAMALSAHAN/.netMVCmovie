@@ -86,3 +86,61 @@ CONNECT WITH VIEW AND CONTROLLER
         	<li role="presentation"><a role="menuitem" tabindex="-1" asp-controller="HellowWorld" asp-action="Index">Index</a></li>
                 <li role="presentation"><a role="menuitem" tabindex="-1" asp-controller="HellowWorld" asp-action="Pamal">Pamal</a></li>
         </ul>
+---------------------------------------------------------------------------------------------
+VIEWDATA & TEMPDATA
+
+	*ViewData use karanne data controller eken view ekata data pass karanna.meke model ekak tina 
+	view ekak ganna epa etakota data pass karanna baha.
+	
+	 public IActionResult Welcome(string name, int numTimes = 1)
+        {
+            ViewData["Message"] = "Hello " + name;
+            ViewData["NumTimes"] = numTimes;
+		
+	     TempData["message"] = "this is temp data";
+
+            return View();
+        }
+
+	*tempdata kiyana eka use karanna puluwan model data ekak tina ekaka unath.This is because the redirect is that only, subsequent, request, so only it can access the TempData object without worry.
+	*The customary Session object is the backing store for the TempData object, and it is destroyed more quickly than a regular session, i.e., immediately after the subsequent request. Because of its short lived scope, it’s great for passing error messages to an error page.
+
+-----------------------------------------------------------------------------------------------
+ADDING MODELS 
+	*mekedi mulinma model ekak hada gannawa.
+
+	*package manager console eke 
+		Install-Package Microsoft.EntityFrameworkCore.SqlServer
+	eka gadanawa
+
+	*dbContext ekak hadagannawa 
+	  public class MvcMovieContext :DbContext
+    {
+        public MvcMovieContext(DbContextOptions<MvcMovieContext> db) :base(db)  //maka tama dependancy injection eka constructor eka hadala tiyanawa
+        {
+                
+        }
+
+        public DbSet<Movie> MovieTbl { get; set; } // mathanin thamai table eka hadanne Movie model eka anuwa
+    }	
+	
+	*hadapu dbContext eka DI nisa eka hama razor pages ekakama use karana hinda eka reg karanna
+	 one
+		startup.cs ekata danna one
+	services.AddDbContext<MvcMovieContext>(dbt => dbt.UseSqlServer(Configuration.GetConnectionString("MvcMovieContext")));
+
+	*connection string eka hadaganna one eka appsetting.json eke hadanna one
+	
+		"ConnectionStrings": {
+    "MvcMovieContext": "Server=(localdb)\\MSSQLLocalDB;Database=MovieDB;Trusted_Connection=True;MultipleActiveResultSets=True"
+  },
+	
+	*meke db eka movieDB ne aluth ekak hadanna hadapu ekakata danna bahane refer it
+	*compilers errors tinawada balanna build karala.error ekak nathnam ita passe wada tika karanna
+	
+	*scaffolded new item gihin MVC Controller With Views kiyana eka thoraganna eka nikan 
+	 fill karanna model eke path ekai dbContek eke path ekai hariyata denna.thama db eka hadila na
+
+	*	Add-Migration InitialCreate
+		Update-Database
+	
