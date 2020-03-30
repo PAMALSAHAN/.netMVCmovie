@@ -143,4 +143,81 @@ ADDING MODELS
 
 	*	Add-Migration InitialCreate
 		Update-Database
+
+	* crud operation ekama hadenawa.
+
+	* entity framwork eka strongly type widihata data pass karagannawa
+		  
+			// GET: Movies/Details/5
+		public async Task<IActionResult> Details(int? id)
+		{
+    			if (id == null)
+    		{
+        		return NotFound();
+    		}
+
+		       var movie = await _context.Movie
+        		.FirstOrDefaultAsync(m => m.Id == id);
+    		if (movie == null)
+    		{
+        		return NotFound();
+    		}
+
+		    return View(movie);
+		}
+		
+	meke movie kiyana eka alla ganne view eke 
+			@model MvcMovie.Models.Movie  // menna methanin
+
+			@{
+   				 ViewData["Title"] = "Details";
+			}
+
+				<h1>Details</h1>
+
+
+			// GET: Movies
+			public async Task<IActionResult> Index()
+			{
+    				return View(await _context.Movie.ToListAsync());
+			}
+
+			@model IEnumerable<MvcMovie.Models.Movie>
+
+
+----------------------------------------------------------------------------------------
+		[HttpPost]
+		[ValidateAntiForgeryToken] =attribute validates the hidden XSRF token generated 
+			by the anti-forgery token generator in the Form Tag Helper
+
+		The ModelState.IsValid method verifies that the data submitted in the form 
+		can be used to modify (edit or update) a Movie object. 
+
+-----------------------------------------------------------------------------------------
+SEARCH FUNCTION
+	*mekedi karanne movie controller eke index eka hadagannawa 
+
+	 public async Task<IActionResult> Index(string searchString)
+        {
+            var movieSet = from m in _context.MovieTbl select m;  // this is Linq 
+            if (!String.IsNullOrEmpty(searchString))  //null nam meke athulata yanne naha eka hinha 
+            {
+                 movieSet= movieSet.Where(m => m.Title.Contains(searchString)); // 
+            }
+
+           // return View(await _context.MovieTbl.ToListAsync()); meke movie table eke tina hama ekama list wenawa 
+            return View(await movieSet.ToListAsync());
+        }
+
+	*meke return karanne movieSet eka issella eke movie table ekama return karanawa
+
+	*front side eke wenne meka
+
+		<form asp-controller="Movies" asp-action="Index">
+    			<p>
+       				 Title: <input type="text" name="SearchString">
+       				 <input type="submit" value="Filter" />
+   			 </p>
+		</form>
+
 	

@@ -20,9 +20,23 @@ namespace MVCmovie.Controllers
         }
 
         // GET: Movies
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string id)
         {
-            return View(await _context.MovieTbl.ToListAsync());
+            var movieSet = from m in _context.MovieTbl select m;  // this is Linq 
+            if (!String.IsNullOrEmpty(id))  //null nam meke athulata yanne naha eka hinha 
+            {
+                 movieSet= movieSet.Where(m => m.Title.Contains(id)); // 
+            }
+
+           // return View(await _context.MovieTbl.ToListAsync()); meke movie table eke tina hama ekama list wenawa 
+            return View(await movieSet.ToListAsync());
+        }
+
+        // this is made by me 
+        [HttpPost]
+        public string Index(string id, bool notUsed)
+        {
+            return "From [HttpPost]Index: filter on " + id;
         }
 
         // GET: Movies/Details/5
